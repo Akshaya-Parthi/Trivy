@@ -1,19 +1,8 @@
-FROM node:16
+# Container image that runs your code
+FROM alpine:3.10
 
-# Create app directory
-WORKDIR /home/node/app
+# Copies your code file from your action repository to the filesystem path `/` of the container
+COPY entrypoint.sh /entrypoint.sh
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json ./
-
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
-
-# Bundle app source
-COPY  ./ ./
-
-EXPOSE 8080
-
-CMD [ "node", "app.js" ]
+# Code file to execute when the docker container starts up (`entrypoint.sh`)
+ENTRYPOINT ["/entrypoint.sh"]
